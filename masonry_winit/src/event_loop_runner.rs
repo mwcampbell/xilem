@@ -542,7 +542,7 @@ impl MasonryState<'_> {
         {
             let _render_poll_span =
                 tracing::info_span!("Waiting for GPU to finish rendering").entered();
-            device.poll(wgpu::Maintain::Wait);
+            device.poll(wgpu::Maintain::Poll);
         }
     }
 
@@ -620,6 +620,17 @@ impl MasonryState<'_> {
                 window
                     .render_root
                     .handle_window_event(WindowEvent::AnimFrame(elapsed));
+
+                // Handle any signals caused by the animation frame
+                self.handle_signals(event_loop, app_driver);
+                let Some(window) = self.windows.get_mut(&handle_id) else {
+                    tracing::warn!(
+                        ?event,
+                        "Got window event for unknown window {:?}",
+                        handle_id
+                    );
+                    return;
+                };
 
                 // If this animation will continue, store the time.
                 // If a new animation starts, then it will have zero reported elapsed time.

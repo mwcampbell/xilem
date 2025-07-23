@@ -226,6 +226,9 @@ pub struct VirtualScroll<W: Widget + FromDynWidget + ?Sized> {
     warned_not_dense: bool,
     /// We don't want to spam warnings about missing an action, but we want the user to be aware of it.
     missed_actions_count: u32,
+
+    /// The amount to scroll by in each frame, intended for loose benchmarking.
+    scroll_per_frame: Option<f64>,
 }
 
 impl<W: Widget + FromDynWidget + ?Sized> std::fmt::Debug for VirtualScroll<W> {
@@ -267,6 +270,7 @@ impl<W: Widget + FromDynWidget + ?Sized> VirtualScroll<W> {
             mean_item_height: DEFAULT_MEAN_ITEM_HEIGHT,
             anchor_height: DEFAULT_MEAN_ITEM_HEIGHT,
             warned_not_dense: false,
+            scroll_per_frame: None,
         }
     }
 
@@ -282,6 +286,15 @@ impl<W: Widget + FromDynWidget + ?Sized> VirtualScroll<W> {
     pub fn with_valid_range(mut self, valid_range: Range<i64>) -> Self {
         self.valid_range = valid_range;
         self.validate_valid_range();
+        self
+    }
+
+    /// Set the number of pixels to scroll in each frame.
+    ///
+    /// This is intended to be used only for benchmarking, as a more
+    /// comprehensive animation system is not yet in place.
+    pub fn with_scroll_per_frame(mut self, amount: Option<f64>) -> Self {
+        self.scroll_per_frame = amount;
         self
     }
 
@@ -416,6 +429,16 @@ impl<W: Widget + FromDynWidget + ?Sized> VirtualScroll<W> {
         this.widget.valid_range = range;
         this.widget.validate_valid_range();
         this.ctx.request_layout();
+    }
+
+    /// Set the number of pixels to scroll in each frame.
+    ///
+    /// This is intended to be used only for benchmarking, as a more
+    /// comprehensive animation system is not yet in place.
+    /// Runtime equivalent of [`with_scroll_per_frame`](Self::with_scroll_per_frame).
+    pub fn set_scroll_per_frame(this: &mut WidgetMut<'_, Self>, amount: Option<f64>) {
+        this.widget.scroll_per_frame = amount;
+        this.ctx.request_anim_frame();
     }
 
     /// Forcefully align the top of the item at `idx` with the top of the
@@ -586,6 +609,11 @@ impl<W: Widget + FromDynWidget + ?Sized> Widget for VirtualScroll<W> {
 
     fn update(&mut self, ctx: &mut UpdateCtx<'_>, _props: &mut PropertiesMut<'_>, event: &Update) {
         match event {
+            Update::WidgetAdded => {
+                if self.scroll_per_frame.is_some() {
+                    ctx.request_anim_frame();
+                }
+            }
             Update::RequestPanToChild(target) => {
                 let new_pos_y = super::portal::compute_pan_range(
                     0.0..ctx.size().height,
@@ -596,6 +624,23 @@ impl<W: Widget + FromDynWidget + ?Sized> Widget for VirtualScroll<W> {
                 self.update_post_scroll(ctx);
             }
             _ => {}
+        }
+    }
+
+    fn on_anim_frame(
+        &mut self,
+        ctx: &mut UpdateCtx<'_>,
+        _props: &mut PropertiesMut<'_>,
+        _interval: u64,
+    ) {
+        if let Some(scroll_per_frame) = self.scroll_per_frame {
+            // tracing::info!(
+            //     "Virtual Scroll Frame time: {:.1?}",
+            //     Duration::from_nanos(_interval)
+            // );
+            ctx.request_anim_frame();
+            self.scroll_offset_from_anchor += scroll_per_frame;
+            self.update_post_scroll(ctx);
         }
     }
 
@@ -750,11 +795,11 @@ impl<W: Widget + FromDynWidget + ?Sized> Widget for VirtualScroll<W> {
         }
 
         // Load a page and a half above the screen
-        let cutoff_up = viewport_size.height * 1.5;
+        let cutoff_up = viewport_size.height * 0.1;
         // Load a page and a half below the screen (note that this cutoff "includes" the screen)
         // We also need to allow scrolling *at least* to the top of the current anchor; therefore, we load items sufficiently
         // that scrolling the bottom of the anchor to the top of the screen, we still have the desired margin
-        let cutoff_down = viewport_size.height * 2.5 + self.anchor_height;
+        let cutoff_down = viewport_size.height * 1.1 + self.anchor_height;
 
         let mut item_crossing_top = None;
         let mut item_crossing_bottom = self.active_range.start;
