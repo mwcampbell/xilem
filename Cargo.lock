@@ -1912,14 +1912,14 @@ checksum = "47f142fe24a9c9944451e8349de0a56af5f3e7226dc46f3ed4d4ecc0b85af75e"
 [[package]]
 name = "jni"
 version = "0.21.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a87aa2bb7d2af34197c04845522473242e1aa17c12f4935d5856491a7fb8c97"
+source = "git+https://github.com/mwcampbell/jni-rs?branch=profiling#fd3bdfe382ad610324e69a96dc8a58c842922067"
 dependencies = [
  "cesu8",
  "cfg-if",
  "combine",
  "jni-sys",
  "log",
+ "profiling",
  "thiserror 1.0.69",
  "walkdir",
  "windows-sys 0.45.0",

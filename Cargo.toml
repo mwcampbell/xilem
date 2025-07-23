@@ -139,3 +139,4 @@ accesskit_macos = { git = "https://github.com/AccessKit/accesskit", branch = "an
 accesskit_unix = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
 accesskit_windows = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
 accesskit_winit = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
+jni = { git = "https://github.com/mwcampbell/jni-rs", branch = "profiling" }
