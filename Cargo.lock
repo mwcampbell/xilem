@@ -21,16 +21,16 @@ checksum = "c71b1793ee61086797f5c80b6efa2b8ffa6d5dd703f118545808a7f2e27f7046"
 [[package]]
 name = "accesskit"
 version = "0.21.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 
 [[package]]
 name = "accesskit_android"
 version = "0.4.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
- "jni 0.21.1 (git+https://github.com/mwcampbell/jni-rs?branch=profiling)",
+ "jni",
  "log",
  "profiling",
 ]
@@ -38,7 +38,7 @@ dependencies = [
 [[package]]
 name = "accesskit_atspi_common"
 version = "0.14.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -51,7 +51,7 @@ dependencies = [
 [[package]]
 name = "accesskit_consumer"
 version = "0.30.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "hashbrown",
@@ -61,7 +61,7 @@ dependencies = [
 [[package]]
 name = "accesskit_macos"
 version = "0.22.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -74,7 +74,7 @@ dependencies = [
 [[package]]
 name = "accesskit_unix"
 version = "0.17.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_atspi_common",
@@ -91,7 +91,7 @@ dependencies = [
 [[package]]
 name = "accesskit_windows"
 version = "0.29.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -104,7 +104,7 @@ dependencies = [
 [[package]]
 name = "accesskit_winit"
 version = "0.29.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
 dependencies = [
  "accesskit",
  "accesskit_android",
@@ -168,7 +168,7 @@ dependencies = [
  "bitflags 2.9.1",
  "cc",
  "cesu8",
- "jni 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "jni",
  "jni-sys",
  "libc",
  "log",
@@ -1715,7 +1715,7 @@ dependencies = [
  "js-sys",
  "log",
  "wasm-bindgen",
- "windows-core 0.61.1",
+ "windows-core 0.58.0",
 ]
 
 [[package]]
@@ -1920,22 +1920,6 @@ dependencies = [
  "combine",
  "jni-sys",
  "log",
- "thiserror 1.0.69",
- "walkdir",
- "windows-sys 0.45.0",
-]
-
-[[package]]
-name = "jni"
-version = "0.21.1"
-source = "git+https://github.com/mwcampbell/jni-rs?branch=profiling#fd3bdfe382ad610324e69a96dc8a58c842922067"
-dependencies = [
- "cesu8",
- "cfg-if",
- "combine",
- "jni-sys",
- "log",
- "profiling",
  "thiserror 1.0.69",
  "walkdir",
  "windows-sys 0.45.0",
@@ -5045,7 +5029,7 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
- "windows-sys 0.59.0",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
