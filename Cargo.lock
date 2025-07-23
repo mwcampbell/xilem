@@ -21,12 +21,12 @@ checksum = "c71b1793ee61086797f5c80b6efa2b8ffa6d5dd703f118545808a7f2e27f7046"
 [[package]]
 name = "accesskit"
 version = "0.21.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 
 [[package]]
 name = "accesskit_android"
 version = "0.4.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -38,7 +38,7 @@ dependencies = [
 [[package]]
 name = "accesskit_atspi_common"
 version = "0.14.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -51,7 +51,7 @@ dependencies = [
 [[package]]
 name = "accesskit_consumer"
 version = "0.30.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "hashbrown",
@@ -61,7 +61,7 @@ dependencies = [
 [[package]]
 name = "accesskit_macos"
 version = "0.22.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -74,7 +74,7 @@ dependencies = [
 [[package]]
 name = "accesskit_unix"
 version = "0.17.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_atspi_common",
@@ -91,7 +91,7 @@ dependencies = [
 [[package]]
 name = "accesskit_windows"
 version = "0.29.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -104,7 +104,7 @@ dependencies = [
 [[package]]
 name = "accesskit_winit"
 version = "0.29.0"
-source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#abc9cb7371ff98dc1fa645a212c72286c803ca81"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest-java-helper#56db91fe8a7ee131ad2fb974d3ce13ff1fa511c6"
 dependencies = [
  "accesskit",
  "accesskit_android",

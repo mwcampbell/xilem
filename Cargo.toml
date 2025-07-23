@@ -132,11 +132,11 @@ strip = "debuginfo" # Implied by debug = 0 since Rust 1.77, but still needed for
 debug-assertions = true # Keep always on for dependencies for cache reuse.
 
 [patch.crates-io]
-accesskit = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_atspi_common = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_consumer = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_macos = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_unix = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_windows = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
-accesskit_winit = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest" }
+accesskit = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_atspi_common = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_consumer = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_macos = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_unix = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_windows = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
+accesskit_winit = { git = "https://github.com/AccessKit/accesskit", branch = "android-scroll-stresstest-java-helper" }
 jni = { git = "https://github.com/mwcampbell/jni-rs", branch = "profiling" }
