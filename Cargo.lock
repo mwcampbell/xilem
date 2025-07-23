@@ -21,14 +21,24 @@ checksum = "c71b1793ee61086797f5c80b6efa2b8ffa6d5dd703f118545808a7f2e27f7046"
 [[package]]
 name = "accesskit"
 version = "0.21.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c0690ad6e6f9597b8439bd3c95e8c6df5cd043afd950c6d68f3b37df641e27c"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+
+[[package]]
+name = "accesskit_android"
+version = "0.4.0"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
+dependencies = [
+ "accesskit",
+ "accesskit_consumer",
+ "jni 0.21.1 (git+https://github.com/mwcampbell/jni-rs?branch=profiling)",
+ "log",
+ "profiling",
+]
 
 [[package]]
 name = "accesskit_atspi_common"
 version = "0.14.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8fb511e093896d3cae0efba40322087dff59ea322308a3e6edf70f28d22f2607"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -41,18 +51,17 @@ dependencies = [
 [[package]]
 name = "accesskit_consumer"
 version = "0.30.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec27574c1baeb7747c802a194566b46b602461e81dc4957949580ea8da695038"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
  "hashbrown",
+ "profiling",
 ]
 
 [[package]]
 name = "accesskit_macos"
 version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf962bfd305aed21133d06128ab3f4a6412031a5b8505534d55af869788af272"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -65,8 +74,7 @@ dependencies = [
 [[package]]
 name = "accesskit_unix"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2abbfb16144cca5bb2ea6acad5865b7c1e70d4fa171ceba1a52ea8e78a7515f4"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
  "accesskit_atspi_common",
@@ -83,8 +91,7 @@ dependencies = [
 [[package]]
 name = "accesskit_windows"
 version = "0.29.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4cd727229c389e32c1a78fe9f74dc62d7c9fb6eac98cfa1a17efde254fb2d98"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
  "accesskit_consumer",
@@ -97,10 +104,10 @@ dependencies = [
 [[package]]
 name = "accesskit_winit"
 version = "0.29.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "822493d0e54e6793da77525bb7235a19e4fef8418194aaf25a988bc93740d683"
+source = "git+https://github.com/AccessKit/accesskit?branch=android-scroll-stresstest#8eee8384edd3f341cd4ef5d4c5b48e27fa69c02a"
 dependencies = [
  "accesskit",
+ "accesskit_android",
  "accesskit_macos",
  "accesskit_unix",
  "accesskit_windows",
@@ -161,7 +168,7 @@ dependencies = [
  "bitflags 2.9.1",
  "cc",
  "cesu8",
- "jni",
+ "jni 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "jni-sys",
  "libc",
  "log",
@@ -1919,6 +1926,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "jni"
+version = "0.21.1"
+source = "git+https://github.com/mwcampbell/jni-rs?branch=profiling#fd3bdfe382ad610324e69a96dc8a58c842922067"
+dependencies = [
+ "cesu8",
+ "cfg-if",
+ "combine",
+ "jni-sys",
+ "log",
+ "profiling",
+ "thiserror 1.0.69",
+ "walkdir",
+ "windows-sys 0.45.0",
+]
+
+[[package]]
 name = "jni-sys"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2996,9 +3019,9 @@ dependencies = [
 
 [[package]]
 name = "profiling"
-version = "1.0.16"
+version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "afbdc74edc00b6f6a218ca6a5364d6226a259d4b8ea1af4a0ea063f27e179f4d"
+checksum = "3eb8486b569e12e2c32ad3e204dbaba5e4b5b216e9367044f25f1dba42341773"
 dependencies = [
  "profiling-procmacros",
  "tracing",
@@ -3006,9 +3029,9 @@ dependencies = [
 
 [[package]]
 name = "profiling-procmacros"
-version = "1.0.16"
+version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a65f2e60fbf1063868558d69c6beacf412dc755f9fc020f514b7955fc914fe30"
+checksum = "52717f9a02b6965224f95ca2a81e2e0c5c43baacd28ca057577988930b6c3d5b"
 dependencies = [
  "quote",
  "syn",
