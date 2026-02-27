@@ -14,7 +14,7 @@ use vello::Scene;
 use crate::core::{
     AccessCtx, ArcStr, BrushIndex, ChildrenIds, HasProperty, LayoutCtx, MeasureCtx, NoAction,
     PaintCtx, PropertiesMut, PropertiesRef, RegisterCtx, StyleProperty, StyleSet, Update,
-    UpdateCtx, Widget, WidgetId, WidgetMut, render_text,
+    UpdateCtx, Widget, WidgetId, WidgetMut, render_text, set_accesskit_brush_properties,
 };
 use crate::kurbo::{Affine, Axis, Point, Size};
 use crate::layout::LenReq;
@@ -489,7 +489,7 @@ impl Widget for Label {
                 ctx.request_layout();
             }
             Update::DisabledChanged(_) => {
-                ctx.request_paint_only();
+                ctx.request_render();
             }
             _ => {}
         }
@@ -620,10 +620,18 @@ impl Widget for Label {
     fn accessibility(
         &mut self,
         ctx: &mut AccessCtx<'_>,
-        _props: &PropertiesRef<'_>,
+        props: &PropertiesRef<'_>,
         node: &mut Node,
     ) {
         let text_origin_in_border_box_space = Point::ORIGIN + ctx.border_box_translation();
+
+        let text_color = if ctx.is_disabled()
+            && let Some(dc) = props.get_defined::<DisabledContentColor>()
+        {
+            &dc.0
+        } else {
+            props.get::<ContentColor>()
+        };
 
         let layout = &self.layouts[self.active_layout];
 
@@ -635,6 +643,7 @@ impl Widget for Label {
             AccessCtx::next_node_id,
             text_origin_in_border_box_space.x,
             text_origin_in_border_box_space.y,
+            |node, style| set_accesskit_brush_properties(node, style, &[text_color.color.into()]),
         );
     }
 

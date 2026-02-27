@@ -1,7 +1,7 @@
 // Copyright 2024 the Xilem Authors
 // SPDX-License-Identifier: Apache-2.0
 
-use accesskit::{Node, NodeId, Role, Tree, TreeUpdate};
+use accesskit::{Node, NodeId, Role, Tree, TreeId, TreeUpdate};
 use tracing::{info_span, trace};
 use tree_arena::ArenaMut;
 use vello::kurbo::Rect;
@@ -9,6 +9,7 @@ use vello::kurbo::Rect;
 use crate::app::{RenderRoot, RenderRootState};
 use crate::core::{AccessCtx, DefaultProperties, PropertiesRef, Widget, WidgetArenaNode, WidgetId};
 use crate::passes::{enter_span_if, recurse_on_children};
+use crate::properties::{ActiveBackground, Background, DisabledBackground};
 
 // --- MARK: BUILD TREE
 fn build_accessibility_tree(
@@ -44,11 +45,11 @@ fn build_accessibility_tree(
             children: children.reborrow_mut(),
             tree_update,
         };
-        let mut node = build_access_node(widget, &mut ctx, scale_factor);
         let props = PropertiesRef {
             map: properties,
             default_map: default_properties.for_widget(widget.type_id()),
         };
+        let mut node = build_access_node(widget, &mut ctx, scale_factor, &props);
         widget.accessibility(&mut ctx, &props, &mut node);
 
         let id: NodeId = ctx.widget_state.id.into();
@@ -79,6 +80,7 @@ fn build_access_node(
     widget: &mut dyn Widget,
     ctx: &mut AccessCtx<'_>,
     scale_factor: Option<f64>,
+    props: &PropertiesRef<'_>,
 ) -> Node {
     let mut node = Node::new(widget.accessibility_role());
     node.set_bounds(to_accesskit_rect(
@@ -133,6 +135,27 @@ fn build_access_node(
         node.add_action(accesskit::Action::Blur);
     }
 
+    let background = if ctx.is_disabled()
+        && let Some(db) = props.get_defined::<DisabledBackground>()
+    {
+        &db.0
+    } else if ctx.is_active()
+        && let Some(ab) = props.get_defined::<ActiveBackground>()
+    {
+        &ab.0
+    } else {
+        props.get::<Background>()
+    };
+    if let Background::Color(color) = background {
+        let rgba = color.to_rgba8();
+        node.set_background_color(accesskit::Color {
+            red: rgba.r,
+            green: rgba.g,
+            blue: rgba.b,
+            alpha: rgba.a,
+        });
+    }
+
     node
 }
 
@@ -146,6 +169,7 @@ pub(crate) fn run_accessibility_pass(root: &mut RenderRoot, scale_factor: f64) -
     let _span = info_span!("accessibility").entered();
 
     let mut tree_update = TreeUpdate {
+        tree_id: TreeId::ROOT,
         nodes: vec![],
         tree: Some(Tree {
             root: root.window_node_id,

@@ -16,7 +16,7 @@ use image::{DynamicImage, ImageFormat, ImageReader, Rgba, RgbaImage};
 use oxipng::{Options, optimize_from_memory};
 use tracing::debug;
 
-use masonry_core::accesskit::{Action, ActionRequest, Node, Role, Tree, TreeUpdate};
+use masonry_core::accesskit::{Action, ActionRequest, Node, Role, Tree, TreeId, TreeUpdate};
 use masonry_core::anymore::AnyDebug;
 use masonry_core::app::{
     RenderRoot, RenderRootOptions, RenderRootSignal, WindowSizePolicy, try_init_test_tracing,
@@ -333,6 +333,7 @@ impl<W: Widget> TestHarness<W> {
         let (signal_sender, signal_receiver) = mpsc::channel::<RenderRootSignal>();
 
         let dummy_tree_update = TreeUpdate {
+            tree_id: TreeId::ROOT,
             nodes: vec![(0.into(), Node::new(Role::Window))],
             tree: Some(Tree {
                 root: 0.into(),
@@ -636,7 +637,7 @@ impl<W: Widget> TestHarness<W> {
 
     /// Returns a reference to the current value of a node of the accessibility tree.
     pub fn access_node(&self, id: WidgetId) -> Option<accesskit_consumer::Node<'_>> {
-        self.access_tree.state().node_by_id(id.into())
+        todo!() // self.access_tree.state().node_by_id(id.into())
     }
 
     // --- MARK: EVENT HELPERS
@@ -775,7 +776,8 @@ impl<W: Widget> TestHarness<W> {
     pub fn scroll_into_view(&mut self, id: WidgetId) {
         self.render_root.handle_access_event(ActionRequest {
             action: Action::ScrollIntoView,
-            target: id.to_raw().into(),
+            target_tree: TreeId::ROOT,
+            target_node: id.to_raw().into(),
             data: None,
         });
     }
@@ -797,7 +799,8 @@ impl<W: Widget> TestHarness<W> {
     pub fn accessibility_click_on(&mut self, id: WidgetId) {
         self.render_root.handle_access_event(ActionRequest {
             action: Action::Click,
-            target: id.to_raw().into(),
+            target_tree: TreeId::ROOT,
+            target_node: id.to_raw().into(),
             data: None,
         });
     }

@@ -31,7 +31,8 @@ pub type StyleProperty = parley::StyleProperty<'static, BrushIndex>;
 /// A set of styles specialised for use within Masonry.
 pub type StyleSet = parley::StyleSet<BrushIndex>;
 
-use parley::{Layout, PositionedLayoutItem};
+use accesskit::{TextDecoration, TextDecorationStyle};
+use parley::{Layout, PositionedLayoutItem, Style};
 use vello::Scene;
 use vello::kurbo::{Affine, Line, Stroke};
 use vello::peniko::{Brush, Fill};
@@ -148,5 +149,48 @@ pub fn render_text(
                 );
             }
         }
+    }
+}
+
+fn to_accesskit_color(brush: &Brush) -> Option<accesskit::Color> {
+    if let Brush::Solid(color) = brush {
+        let rgba = color.to_rgba8();
+        Some(accesskit::Color {
+            red: rgba.r,
+            green: rgba.g,
+            blue: rgba.b,
+            alpha: rgba.a,
+        })
+    } else {
+        None
+    }
+}
+
+/// Sets AccessKit text properties from the brush(es) for the given style.
+///
+/// The `BrushIndex` values of the runs are indices into `brushes`.
+pub fn set_accesskit_brush_properties(
+    node: &mut accesskit::Node,
+    style: &Style<BrushIndex>,
+    brushes: &[Brush],
+) {
+    if let Some(color) = to_accesskit_color(&brushes[style.brush.0]) {
+        node.set_foreground_color(color);
+    }
+    if let Some(deco) = &style.underline
+        && let Some(color) = to_accesskit_color(&brushes[deco.brush.0])
+    {
+        node.set_underline(TextDecoration {
+            style: TextDecorationStyle::Solid,
+            color,
+        });
+    }
+    if let Some(deco) = &style.strikethrough
+        && let Some(color) = to_accesskit_color(&brushes[deco.brush.0])
+    {
+        node.set_strikethrough(TextDecoration {
+            style: TextDecorationStyle::Solid,
+            color,
+        });
     }
 }
